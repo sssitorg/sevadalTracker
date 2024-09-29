@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import styles from "@/app/styles/profile.module.css"; // Using the alias
 
 const statesOfIndia = [
   "Andhra Pradesh",
@@ -53,22 +54,27 @@ const ProfilePage = () => {
   };
 
   return (
-    <div>
-      <h1>Profile</h1>
+    <div className={styles.profileContainer}>
+      <h1 className={styles.heading}>Profile</h1>
       <input
         type="text"
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="Enter your name"
+        className={styles.input}
       />
       <br />
-      <label>
-        SevaState:
+      <label className={styles.label1}>
         <select
           value={sevaState}
           onChange={(e) => setSevaState(e.target.value)}
+          className={`w-4/5 p-5 my-5 bg-white border-none rounded-md text-lg 
+            ${sevaState ? "text-black" : "text-gray-400"} 
+            focus:text-black`}
+
+          //  className={styles.select}
         >
-          <option value="">Select a state</option>
+          <option value="">Select your state</option>
           {statesOfIndia.map((state) => (
             <option key={state} value={state}>
               {state}
@@ -82,10 +88,15 @@ const ProfilePage = () => {
         value={bgDate}
         onChange={(e) => setBgDate(e.target.value)}
         placeholder="Enter your begin date"
+        className={styles.input}
       />
-      <button onClick={handleSaveAndContinue}>Save and Continue</button>
+      <button onClick={handleSaveAndContinue} className={styles.button}>
+        Save and Continue
+      </button>
       <br />
-      <button onClick={handleSaveAndClose}>Save and Close</button>
+      <button onClick={handleSaveAndClose} className={styles.button}>
+        Save and Close
+      </button>
     </div>
   );
 };
