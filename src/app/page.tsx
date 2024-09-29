@@ -1,11 +1,34 @@
-import Link from "next/link";
 import Navbar from "./components/Navbar";
+
 const HomePage: React.FC = () => {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "100vh",
+        textAlign: "center",
+      }}
+    >
+      <img
+        src="/sai emblum logo.png"
+        alt="Logo"
+        style={{ width: "100px", height: "auto" }}
+      />
+      <br />
+      <br />
+      <h1>Welcome to the Sevadal Tracking App</h1>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <h2 style={{ margin: 0 }}>click here on: -{">   "}</h2> <br /> <br />
         <Navbar />
-        <h1>Welcome to the Sevadal Tracking App (Home page)</h1>
       </div>
     </div>
   );
