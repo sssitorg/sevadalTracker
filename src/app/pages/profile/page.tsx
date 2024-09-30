@@ -1,5 +1,4 @@
 "use client";
-
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import styles from "@/app/styles/profile.module.css"; // Using the alias
@@ -64,15 +63,13 @@ const ProfilePage = () => {
         className={styles.input}
       />
       <br />
-      <label className={styles.label1}>
+      <label className={styles.label}>
         <select
           value={sevaState}
           onChange={(e) => setSevaState(e.target.value)}
-          className={`w-4/5 p-5 my-5 bg-white border-none rounded-md text-lg 
-            ${sevaState ? "text-black" : "text-gray-400"} 
-            focus:text-black`}
-
-          //  className={styles.select}
+          className={`${styles.select} ${
+            sevaState ? "text-[#333333]" : "text-gray-500"
+          }`}
         >
           <option value="">Select your state</option>
           {statesOfIndia.map((state) => (
@@ -93,7 +90,7 @@ const ProfilePage = () => {
       <button onClick={handleSaveAndContinue} className={styles.button}>
         Save and Continue
       </button>
-      <br />
+
       <button onClick={handleSaveAndClose} className={styles.button}>
         Save and Close
       </button>

@@ -1,62 +1,53 @@
-/* profile.module.css */
-
 .profileContainer {
-    margin: 20px auto; /* Center horizontally */
-    padding: 20px;
-    border: 1px solid #ccc1cc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    width: 50%; /* Set width to 50% */
-    height: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center content horizontally */
+    @apply mx-auto mt-10 p-2 border border-[#ccc1cc] rounded bg-[#f9f9f9] flex flex-col items-center;
+    height: 3.5in;
+    width: 2in;
 }
 
-
 .heading {
-    font-size: 24px;
-    color: #eb7e1e;
-    flex-flow:wrap;
-    align-items: center;
+    @apply text-lg font-bold text-[#eb7e1e] flex-wrap items-center mb-2;
 }
 
 .input {
-    width: 80%;
-    padding: 20px;
-    margin: 20px 5;
-    border: 1px solid #a1a9b6;
-    border-radius: 4px;
+    @apply w-full p-1 my-1 border border-[#a1a9b6] rounded text-gray-500 placeholder-gray-700;
 }
 
-.label1 {
-    
-    width: 80%;
-        padding: 20px;
-        margin: 20px 5;
-        background-color: #fff;
-        border: 1px solid #ccc1cc;
-        border-radius: 4px;
-        
+.input:focus {
+    @apply text-gray-800;
+}
+
+.input:not(:placeholder-shown) {
+    @apply text-gray-800;
+}
+
+.label {
+    @apply w-full p-1 my-1 bg-white border border-[#ccc1cc] rounded;
 }
 
 .select {
-    
-    font-size: 18px;
-        color: #a1a9b6;
-        border: none;
+    @apply text-sm text-gray-500 border-none my-1 placeholder-gray-400;
+}
+
+.select:focus {
+    @apply text-gray-800;
+}
+
+.select:not([value=""]) {
+    @apply text-gray-800;
+}
+
+.date-picker {
+    @apply text-sm text-gray-500 border-none my-1 placeholder-gray-400;
+}
+
+.date-picker:focus {
+    @apply text-gray-800;
+}
+
+.date-picker:not(:placeholder-shown) {
+    @apply text-gray-800;
 }
 
 .button {
-    padding: 10px 20px;
-    margin: 10px 5px;
-    border: none;
-    border-radius: 4px;
-    background-color: #4CAF50;
-    color: white;
-    cursor: pointer;
-}
-
-.button:hover {
-    background-color: #45a049;
+    @apply px-2 py-1 my-3 mx-1 border-none rounded bg-[#4CAF50] text-white cursor-pointer hover:bg-[#45a049];
 }

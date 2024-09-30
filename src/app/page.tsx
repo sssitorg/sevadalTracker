@@ -19,7 +19,7 @@ const HomePage: React.FC = () => {
       />
       <br />
       <br />
-      <h1>Welcome to the Sevadal Tracking App</h1>
+      <h1> Welcome to the Sevadal Tracking App</h1>
       <div
         style={{
           display: "flex",

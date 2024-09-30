@@ -1,0 +1,24 @@
+.displayContainer {
+        @apply mx-auto mt-10 p-2 border border-[#ccc1cc] rounded bg-[transparent] flex flex-col items-center;
+        height: 10in;
+        width: 6in;
+        box-sizing: border-box;
+    }
+
+.dispHeading {
+    @apply text-lg font-bold text-[#eb7e1e] flex-wrap mb-1 mt-10 flex flex-row items-center;
+}
+
+.h2 {
+    @apply text-sm font-bold text-[#f6a863] flex-wrap items-center mb-2;
+}
+
+.button {
+    @apply px-2 py-1 my-3 mx-1 border-none rounded bg-[#4CAF50] text-white cursor-pointer hover:bg-[#45a049];
+}
+
+.dispTable {
+
+@apply table-auto;
+}
+

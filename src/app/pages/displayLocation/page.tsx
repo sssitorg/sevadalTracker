@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import styles from "@/app/styles/DisplayLocation.module.css";
 
 const DisplayLocationPage = () => {
   const [profile, setProfile] = useState<{
@@ -31,11 +32,11 @@ const DisplayLocationPage = () => {
   };
 
   return (
-    <div>
-      <h1>Location Details for Sevadals</h1>
-      <h2>Location State: {profile?.sevaState || "N/A"}</h2>
-      <h2>Seva Begin Date: {profile?.bgDate || "N/A"}</h2>
-      <table>
+    <div className={styles.displayContainer}>
+      <h1 className={styles.dispHeading}>Location Details for Sevadals</h1>
+      <h2 className={styles.h2}>Seva State: {profile?.sevaState || "N/A"}</h2>
+      <h2 className={styles.h2}>Seva Begin Date: {profile?.bgDate || "N/A"}</h2>
+      <table className={styles.dispTable}>
         <thead>
           <tr>
             <th>User Name</th>
@@ -53,7 +54,9 @@ const DisplayLocationPage = () => {
           ))}
         </tbody>
       </table>
-      <button onClick={resetDisplay}>Reset Data</button>
+      <button onClick={resetDisplay} className={styles.button}>
+        Reset Data
+      </button>
     </div>
   );
 };
