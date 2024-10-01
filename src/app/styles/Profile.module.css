@@ -9,14 +9,10 @@
 }
 
 .input {
-    @apply w-full p-1 my-1 border border-[#a1a9b6] rounded text-gray-500 placeholder-gray-700;
+    @apply w-full p-1 my-1 border border-[#a1a9b6] rounded text-gray-500 placeholder-gray-500;
 }
 
 .input:focus {
-    @apply text-gray-800;
-}
-
-.input:not(:placeholder-shown) {
     @apply text-gray-800;
 }
 
@@ -25,29 +21,26 @@
 }
 
 .select {
-    @apply text-sm text-gray-500 border-none my-1 placeholder-gray-400;
+    @apply w-full p-1 my-1 text-sm text-gray-500 placeholder-gray-400;
 }
 
 .select:focus {
     @apply text-gray-800;
 }
 
-.select:not([value=""]) {
+.selected {
     @apply text-gray-800;
 }
 
-.date-picker {
-    @apply text-sm text-gray-500 border-none my-1 placeholder-gray-400;
-}
-
-.date-picker:focus {
-    @apply text-gray-800;
-}
-
-.date-picker:not(:placeholder-shown) {
-    @apply text-gray-800;
+.errorMessage {
+    color: red;
+    font-size: x-small;
 }
 
 .button {
     @apply px-2 py-1 my-3 mx-1 border-none rounded bg-[#4CAF50] text-white cursor-pointer hover:bg-[#45a049];
+}
+
+.buttonDisabled {
+    @apply bg-gray-400 cursor-not-allowed;
 }

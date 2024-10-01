@@ -37,24 +37,27 @@ const DisplayLocationPage = () => {
       <h2 className={styles.h2}>Seva State: {profile?.sevaState || "N/A"}</h2>
       <h2 className={styles.h2}>Seva Begin Date: {profile?.bgDate || "N/A"}</h2>
       <table className={styles.dispTable}>
-        <thead>
+        <thead className={styles.thead}>
           <tr>
-            <th>User Name</th>
-            <th>Location Name</th>
-            <th>Current Date/Time</th>
+            <th className={styles.thCol}>User Name</th>
+            <th className={styles.thCol}>Location Name</th>
+            <th className={styles.thCol}>Current Date/Time</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={styles.tbody}>
           {profiles.map((profile, index) => (
-            <tr key={index}>
-              <td>{profile.userName}</td>
-              <td>{profile.locationName}</td>
-              <td>{profile.time}</td>
+            <tr
+              key={index}
+              className={"index % 2 === 0 ? styles.tr : styles.trAlt"}
+            >
+              <td className={styles.td}>{profile.userName}</td>
+              <td className={styles.td}>{profile.locationName}</td>
+              <td className={styles.td}>{profile.time}</td>
             </tr>
           ))}
         </tbody>
       </table>
-      <button onClick={resetDisplay} className={styles.button}>
+      <button onClick={resetDisplay} className="button">
         Reset Data
       </button>
     </div>

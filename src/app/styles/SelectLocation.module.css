@@ -1,0 +1,12 @@
+.selectContainer {
+    @apply mx-auto mt-2 p-1 border border-[#ccc1cc] rounded bg-[transparent] flex flex-col items-center;
+    height: 4.5in;
+    width: 8.5in;
+    box-sizing: border-box;
+}
+
+.h1 {
+    
+            @apply text-lg font-bold text-[#eb7e1e] flex-wrap mb-1 mt-2 flex flex-row items-center align-middle;
+        
+}

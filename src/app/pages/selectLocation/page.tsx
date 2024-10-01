@@ -6,6 +6,7 @@ import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { LatLng } from "leaflet";
+import styles from "@/app/styles/SelectLocation.module.css";
 
 // Fix for Leaflet's default icon paths
 L.Icon.Default.mergeOptions({
@@ -144,15 +145,16 @@ const SelectLocationPage = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Your Seva Point, click your location on the map</h1>
-      <h1>Profile</h1>
-      <p>Welcome, {name}</p>
+    <div className={styles.selectContainer}>
+      <h1 className={styles.h1}>
+        Welcome, {name}, click your Seva location on the map
+      </h1>
+
       {isLocationEnabled ? (
         <MapContainer
           center={[14.165763, 77.810709]}
           zoom={18}
-          style={{ height: "300px", width: "180%" }}
+          style={{ height: "4.5in", width: "8.5in" }}
         >
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -164,7 +166,11 @@ const SelectLocationPage = () => {
         <p>Please enable your location services to proceed.</p>
       )}
       <p>Selected Location: {locationName || "None"}</p>
-      <button onClick={handleSave} disabled={!isLocationEnabled}>
+      <button
+        className="button"
+        onClick={handleSave}
+        disabled={!isLocationEnabled}
+      >
         Save Location
       </button>
     </div>
