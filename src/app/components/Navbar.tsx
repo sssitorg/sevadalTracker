@@ -6,7 +6,7 @@ const Navbar = () => {
     <div>
       <nav>
         <Link href="/pages/profile">
-          <button>Profile</button>
+          <button className="button">Profile</button>
         </Link>
       </nav>
     </div>

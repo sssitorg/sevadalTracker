@@ -27,7 +27,7 @@ const HomePage: React.FC = () => {
           alignItems: "center",
         }}
       >
-        <h2 style={{ margin: 0 }}>click here on: -{">   "}</h2> <br /> <br />
+        <h2 style={{ margin: 0 }}>Let's go to: </h2> <br /> <br />
         <Navbar />
       </div>
     </div>
