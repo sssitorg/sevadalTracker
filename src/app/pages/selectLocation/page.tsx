@@ -152,9 +152,9 @@ const SelectLocationPage = () => {
 
       {isLocationEnabled ? (
         <MapContainer
-          center={[14.165763, 77.810709]}
+          center={[14.1652, 77.8117]}
           zoom={18}
-          style={{ height: "4.5in", width: "8.5in" }}
+          style={{ height: "3.1in", width: "8.5in" }}
         >
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
