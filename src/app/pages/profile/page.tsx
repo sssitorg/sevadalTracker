@@ -38,7 +38,7 @@ const statesOfIndia = [
 const ProfilePage = () => {
   const [name, setName] = useState("");
   const [sevaState, setSevaState] = useState("");
-  const [bgDate, setBgDate] = useState(""); // Begin date
+  const [bgDate, setBgDate] = useState(""); // Seva Begin date
   const [errors, setErrors] = useState({
     name: false,
     sevaState: false,

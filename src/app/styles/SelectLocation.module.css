@@ -1,15 +1,15 @@
 .selectContainer {
     @apply mx-auto mt-2 p-1 border border-[#ccc1cc] rounded bg-[transparent] flex flex-col items-center overflow-hidden;
     @apply box-border;
-    @apply w-[215%] h-[25%];
+    @apply w-[215%] h-[70%];
 
     /* Responsive adjustments */
   
-        @apply w-[195%] h-[25%];
+        @apply w-[195%] h-[35%];
     
 
    
-        @apply w-[100%] h-[-25%];
+        @apply w-[100%] h-[40%];
     
 }
 

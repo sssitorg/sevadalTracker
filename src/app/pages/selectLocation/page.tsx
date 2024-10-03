@@ -7,6 +7,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { LatLng } from "leaflet";
 import styles from "@/app/styles/SelectLocation.module.css";
+import { error } from "console";
 
 // Fix for Leaflet's default icon paths
 L.Icon.Default.mergeOptions({
@@ -66,6 +67,7 @@ const SelectLocationPage = () => {
   const [bgDate, setBgDate] = useState("");
   const [sevaState, setSevaState] = useState("");
   const [isLocationEnabled, setIsLocationEnabled] = useState(false);
+  const [selectionLocError, setSelectionLocError] = useState(false);
 
   const router = useRouter();
 
@@ -85,6 +87,10 @@ const SelectLocationPage = () => {
       }
     }
   }, []);
+
+  useEffect(() => {
+    setSelectionLocError(locationName === "");
+  }, [locationName]);
 
   const handleSave = () => {
     const profiles = JSON.parse(localStorage.getItem("userProfiles") || "[]");
@@ -152,7 +158,7 @@ const SelectLocationPage = () => {
 
       {isLocationEnabled ? (
         <MapContainer
-          center={[14.1652, 77.8117]}
+          center={[14.165813, 77.809422]}
           zoom={18}
           style={{ height: "3.1in", width: "8.5in" }}
         >
@@ -165,11 +171,18 @@ const SelectLocationPage = () => {
       ) : (
         <p>Please enable your location services to proceed.</p>
       )}
+
       <p>Selected Location: {locationName || "None"}</p>
       <button
-        className="button"
+        className={`button ${selectionLocError ? "buttonDisabled" : ""}`}
         onClick={handleSave}
-        disabled={!isLocationEnabled}
+        disabled={selectionLocError || !isLocationEnabled}
+        style={{
+          backgroundColor:
+            selectionLocError || !isLocationEnabled ? "gray" : "green",
+          cursor:
+            selectionLocError || !isLocationEnabled ? "not-allowed" : "pointer",
+        }}
       >
         Save Location
       </button>
