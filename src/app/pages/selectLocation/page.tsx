@@ -1,3 +1,14 @@
+/*************************************************************************************************************************************** */
+/*Dev contact:   7011 883 820                                                                                                            */
+/*App for:       All India Sri Sathya Sai Seva Organization                                                                              */
+/*App Name:      Sevadal Tracker app for Group Leaders                                                                                   */
+/*Purpose:       Allow Group Leaders to track their members if they have reached the Seva Point or not w/o having to leave their duty    */
+/*               and be able to verify without visiting each one of them by going to their spots                                         */
+/*               This will give you their Date and Time, so you can track their regularity flawlessly                                    */
+/*Creation Date: Oct 3rd 2024, Navratri 1st day                                                                                          */
+/*Release Date:  November 23rd 2024, Sri Sathya Sai Baba's 99th Birthday                                                                 */
+/*************************************************************************************************************************************** */
+
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -66,6 +77,8 @@ const SelectLocationPage = () => {
   const [locationName, setLocationName] = useState("");
   const [bgDate, setBgDate] = useState("");
   const [sevaState, setSevaState] = useState("");
+  const [designation, setDesignation] = useState("Sevadal");
+
   const [isLocationEnabled, setIsLocationEnabled] = useState(false);
   const [selectionLocError, setSelectionLocError] = useState(false);
 
@@ -75,13 +88,14 @@ const SelectLocationPage = () => {
     const storedProfile = localStorage.getItem("userProfile");
     if (storedProfile) {
       try {
-        const { name, location, locationName, bgDate, sevaState } =
+        const { name, location, locationName, bgDate, sevaState, designation } =
           JSON.parse(storedProfile);
         setName(name);
         setLocation(location ? JSON.parse(location) : null);
         setLocationName(locationName);
         setBgDate(bgDate);
         setSevaState(sevaState);
+        setDesignation(designation);
       } catch (error) {
         console.error("Error parsing stored profile:", error);
       }
@@ -103,7 +117,14 @@ const SelectLocationPage = () => {
     localStorage.setItem("userProfiles", JSON.stringify(profiles));
     localStorage.setItem(
       "userProfile",
-      JSON.stringify({ name, location, locationName, bgDate, sevaState })
+      JSON.stringify({
+        name,
+        location,
+        locationName,
+        bgDate,
+        sevaState,
+        designation,
+      })
     );
     router.push("/pages/displayLocation");
   };

@@ -24,6 +24,11 @@ body {
   @apply px-2 py-1 my-3 mx-1 border-none rounded bg-[#4CAF50] text-white cursor-pointer hover:bg-[#45a049];
 }
 
+.homeIcon::before {
+  content: "\1F3E0";
+}
+
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

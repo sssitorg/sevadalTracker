@@ -1,53 +1,134 @@
-
-
 .displayContainer {
-        @apply mx-auto mt-10 p-2 border border-[#ccc1cc] rounded bg-[transparent] flex flex-col items-center;
-        height: 10in;
-        width: 6in;
-        box-sizing: border-box;
-    }
+  @apply mx-auto mt-10 p-2 border border-[#ccc1cc] rounded bg-[transparent] flex flex-col items-center;
+  min-height: 7in;
+  width: 100%;
+  max-width: 6in;
+  box-sizing: border-box;
+  flex-grow: 1;
+}
+
+.search {
+  @apply text-[#110d0d] border p-1 mb-4 flex-wrap flex flex-row items-center justify-evenly w-full rounded-lg;
+}
+
+.search::placeholder {
+  color: #545050;
+  text-align: center;
+}
+
+.para {
+  @apply text-xs font-bold text-[#fb3939] flex-wrap flex flex-row items-center;
+  font-family: Arial, sans-serif;
+}
 
 .dispHeading {
-    @apply text-lg font-bold text-[#eb7e1e] flex-wrap mb-1 mt-10 flex flex-row items-center;
+  @apply text-lg font-bold text-[#eb7e1e] flex-wrap mb-1 mt-10 flex flex-row items-center;
 }
 
 .h2 {
-    @apply text-sm font-bold text-[#f6a863] flex-wrap items-center mb-2;
+  @apply text-sm font-bold text-[#f6a863] flex-wrap items-center mb-2;
 }
 
 .button {
-    @apply px-2 py-1 my-3 mx-1 border-none rounded bg-[#4CAF50] text-white cursor-pointer hover:bg-[#45a049];
+  @apply px-2 py-1 my-3 mx-1 border-none rounded bg-[#4CAF50] text-white cursor-pointer hover:bg-[#45a049];
 }
 
 .dispTable {
-
-@apply table-auto rounded-lg overflow-hidden;
+  @apply table-auto rounded-lg overflow-hidden w-full;
 }
 
- .thead {
-     @apply bg-gray-50;
-
- }
+.thead {
+  @apply bg-gray-50;
+}
 
 .tbody {
-@apply  bg-white divide-y divide-gray-200;
+  @apply bg-white divide-y divide-gray-200;
 }
 
- 
-  .thCol {
-@apply px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider;
-  } 
-  
-
+.thCol,
 .td {
-    @apply px-6 py-4 whitespace-nowrap  text-sm font-medium text-gray-800 font-cambria;
+  @apply px-2 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider;
+  /* Ensured consistent centering and reduced padding */
 }
 
-  .tr {
-    @apply bg-white ;
-  }
-   .trAlt{
- 
-    @apply bg-gray-50 ;
-   }
+.tr {
+  @apply bg-white;
+}
 
+.trAlt {
+  @apply bg-gray-50;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 1024px) {
+
+  .thCol
+   {
+      @apply px-16 py-2;
+    }
+
+  .td {
+    @apply px-3 py-2;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .dispTable,
+  .thead,
+  .tbody,
+  .thCol,
+  .td {
+    @apply block w-full;
+  }
+
+  .thCol,
+  .td {
+    @apply text-center;
+  }
+
+  .tr,
+  .trAlt {
+    @apply flex flex-col items-center;
+  }
+
+  .dispContainer {
+    @apply px-4;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .dispTable,
+  .thead,
+  .tbody,
+  .thCol,
+  .td {
+    @apply block w-full text-xs;
+  }
+
+  .thCol,
+  .td {
+    @apply text-center;
+  }
+
+  .tr,
+  .trAlt {
+    @apply flex flex-col items-center;
+  }
+
+  .dispContainer {
+    @apply px-2;
+  }
+}
+
+/* Flexbox Alignment for Small Screens */
+@media (max-width: 768px) {
+
+  .thCol,
+  .td {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

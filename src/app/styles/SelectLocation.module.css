@@ -13,6 +13,11 @@
     
 }
 
+.disableBtn{
+
+    @apply bg-gray-400
+}
+
 .h1 {
     @apply text-lg font-bold text-[#eb7e1e] flex-wrap mb-1 mt-2 flex flex-row items-center align-middle;
 }
