@@ -11,6 +11,7 @@
 
 "use client";
 
+// src/app/pages/selectLocation/page.tsx
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
@@ -18,7 +19,10 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { LatLng } from "leaflet";
 import styles from "@/app/styles/SelectLocation.module.css";
-import { error } from "console";
+import {
+  fetchLocationName,
+  checkIfWithinPuttaparthi,
+} from "@/app/utils/fetchMapData"; // Importing the functions
 
 // Fix for Leaflet's default icon paths
 L.Icon.Default.mergeOptions({
@@ -26,48 +30,6 @@ L.Icon.Default.mergeOptions({
   iconUrl: "/marker-icon.png",
   shadowUrl: "/marker-shadow.png",
 });
-
-const cache = new Map();
-let lastRequestTime = 0;
-
-const fetchLocationName = async (lat: number, lng: number) => {
-  const cacheKey = `${lat},${lng}`;
-  if (cache.has(cacheKey)) {
-    return cache.get(cacheKey);
-  }
-
-  const now = Date.now();
-  if (now - lastRequestTime < 1000) {
-    await new Promise((resolve) =>
-      setTimeout(resolve, 1000 - (now - lastRequestTime))
-    );
-  }
-  lastRequestTime = now;
-
-  const response = await fetch(
-    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`
-  );
-
-  if (response.status === 429) {
-    throw new Error("Rate limit exceeded. Please try again later.");
-  }
-
-  const data = await response.json();
-  const locationName = data.display_name.split(",")[0]; // Extract the first part of the display name
-  cache.set(cacheKey, locationName);
-  return locationName;
-};
-
-const checkIfWithinPuttaparthi = async (lat: number, lng: number) => {
-  const response = await fetch(
-    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`
-  );
-  const data = await response.json();
-  return (
-    data.address.village === "Puttaparthi" ||
-    data.address.town === "Puttaparthi"
-  );
-};
 
 const SelectLocationPage = () => {
   const [name, setName] = useState("");
