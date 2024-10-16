@@ -14,7 +14,7 @@ const HomePage: React.FC = () => {
       }}
     >
       <Image
-        src="/sai emblum logo.png"
+        src="/SarvadharmaLogo1.jpg"
         alt="Logo"
         width={100}
         height={100}
