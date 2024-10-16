@@ -10,42 +10,49 @@
 /*************************************************************************************************************************************** */
 
 "use client";
+// src/app/pages/displayLocation/page.tsx
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "@/app/styles/DisplayLocation.module.css";
 import { useRouter } from "next/navigation";
-
-interface Profile {
-  name: string;
-  sevaState: string;
-  locationName: string;
-  bgDate: string;
-  designation: string;
-}
+import BackToTop from "@/app/components/BackToTop";
+import BackToBottom from "@/app/components/BackToBottom";
+import { useAtom } from "jotai";
+import {
+  searchTermAtom,
+  isLoadingAtom,
+  profileAtom,
+  profilesAtom,
+} from "@/app/atoms/atoms";
+import Image from "next/image";
 
 const DisplayLocationPage: React.FC = () => {
-  const [profile, setProfile] = useState<Profile | null>(null);
-  const [profiles, setProfiles] = useState<
-    { userName: string; locationName: string; time: string }[]
-  >([]);
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useAtom(isLoadingAtom);
+  const [profile, setProfile] = useAtom(profileAtom);
+  const [profiles, setProfiles] = useAtom(profilesAtom);
+  const [searchTerm, setSearchTerm] = useAtom(searchTermAtom);
   const bottomRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   useEffect(() => {
-    const storedProfile = localStorage.getItem("userProfile");
-    if (storedProfile) {
-      setProfile(JSON.parse(storedProfile));
-    }
+    const fetchData = () => {
+      setIsLoading(true);
 
-    const storedProfiles = localStorage.getItem("userProfiles");
-    if (storedProfiles) {
-      setProfiles(JSON.parse(storedProfiles));
-    }
+      const storedProfile = localStorage.getItem("userProfile");
+      if (storedProfile) {
+        setProfile(JSON.parse(storedProfile));
+      }
 
-    setIsLoading(false);
-  }, []);
+      const storedProfiles = localStorage.getItem("userProfiles");
+      if (storedProfiles) {
+        setProfiles(JSON.parse(storedProfiles));
+      }
+
+      setIsLoading(false);
+    };
+
+    fetchData();
+  }, [setIsLoading, setProfile, setProfiles]);
 
   useEffect(() => {
     if (bottomRef.current) {
@@ -67,16 +74,19 @@ const DisplayLocationPage: React.FC = () => {
   };
 
   const isResetDisabled = () => {
-    return !(
-      profile?.designation === "Group Leader" ||
-      profile?.designation === "State President" ||
-      profile?.designation === "All India President"
-    );
+    return !(profile?.designation === "State Coordinator");
   };
 
-  const filteredProfiles = profiles.filter((profile) =>
-    profile.userName.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredProfiles = profiles.filter((profile) => {
+    const searchLower = searchTerm.toLowerCase();
+    return (
+      (profile.userName &&
+        profile.userName.toLowerCase().includes(searchLower)) ||
+      (profile.locationName &&
+        profile.locationName.toLowerCase().includes(searchLower)) ||
+      (profile.time && profile.time.toLowerCase().includes(searchLower))
+    );
+  });
 
   return (
     <div className={styles.displayContainer}>
@@ -93,7 +103,7 @@ const DisplayLocationPage: React.FC = () => {
           </h2>
           <input
             type="text"
-            placeholder="Search by user name"
+            placeholder="Search by user name, location name, or date"
             className={styles.search}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -135,20 +145,19 @@ const DisplayLocationPage: React.FC = () => {
       )}
       <div>
         <button onClick={handleSelectLocClick} className="button">
-          <img
+          <Image
             src="/locationIcon.jpg"
             alt="Location Icon"
-            style={{ width: "24px", height: "24px" }}
+            width={24}
+            height={24}
           />
         </button>
         <button onClick={handleHomeClick} className="button">
-          <img
-            src="/homeIcon.png"
-            alt="Home Icon"
-            style={{ width: "24px", height: "24px" }}
-          />
+          <Image src="/homeIcon.png" alt="Home Icon" width={24} height={24} />
         </button>
       </div>
+      <BackToTop />
+      <BackToBottom />
     </div>
   );
 };

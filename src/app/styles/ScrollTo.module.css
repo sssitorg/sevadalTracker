@@ -1,0 +1,37 @@
+.backToTop {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000;
+    /* Ensure it's above other elements */
+}
+
+.backToBottom {
+    position: fixed;
+    bottom: 220px;
+    /* Adjusted to avoid overlapping with BackToTop */
+    right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000;
+    /* Ensure it's above other elements */
+}
+
+.icon {
+    background-color: #000;
+    color: #fff;
+    border-radius: 50%;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+}
+
+.icon:hover {
+    background-color: #444;
+}

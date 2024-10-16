@@ -11,109 +11,192 @@
 
 "use client";
 
-// src/app/pages/selectLocation/page.tsx
-import React, { useState, useEffect } from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
-import L from "leaflet";
+import dynamic from "next/dynamic";
 import "leaflet/dist/leaflet.css";
 import { LatLng } from "leaflet";
 import styles from "@/app/styles/SelectLocation.module.css";
 import {
   fetchLocationName,
   checkIfWithinPuttaparthi,
-} from "@/app/utils/fetchMapData"; // Importing the functions
+} from "@/app/utils/fetchMapData";
+import { useAtom } from "jotai";
+import {
+  nameAtom,
+  locationAtom,
+  locationNameAtom,
+  bgDateAtom,
+  sevaStateAtom,
+  designationAtom,
+  isLocationEnabledAtom,
+  userNotSelLocErrorAtom,
+} from "@/app/atoms/atoms";
 
-// Fix for Leaflet's default icon paths
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: "/marker-icon-2x.png",
-  iconUrl: "/marker-icon.png",
-  shadowUrl: "/marker-shadow.png",
-});
+// Dynamically import Leaflet components to prevent SSR issues
+const MapContainer = dynamic(
+  () => import("react-leaflet").then((mod) => mod.MapContainer),
+  { ssr: false }
+);
+const TileLayer = dynamic(
+  () => import("react-leaflet").then((mod) => mod.TileLayer),
+  { ssr: false }
+);
+const Marker = dynamic(
+  () => import("react-leaflet").then((mod) => mod.Marker),
+  { ssr: false }
+);
+import { useMapEvents } from "react-leaflet";
+
+// Ensure Leaflet icons configuration only runs client-side
+if (typeof window !== "undefined") {
+  import("leaflet").then((L) => {
+    L.Icon.Default.mergeOptions({
+      iconRetinaUrl: "/marker-icon-2x.png",
+      iconUrl: "/marker-icon.png",
+      shadowUrl: "/marker-shadow.png",
+    });
+  });
+}
 
 const SelectLocationPage = () => {
-  const [name, setName] = useState("");
-  const [location, setLocation] = useState<{ lat: number; lng: number } | null>(
-    null
+  const [name, setName] = useAtom(nameAtom);
+  const [location, setLocation] = useAtom(locationAtom);
+  const [locationName, setLocationName] = useAtom(locationNameAtom);
+  const [bgDate, setBgDate] = useAtom(bgDateAtom);
+  const [sevaState, setSevaState] = useAtom(sevaStateAtom);
+  const [designation, setDesignation] = useAtom(designationAtom);
+  const [isLocationEnabled, setIsLocationEnabled] = useAtom(
+    isLocationEnabledAtom
   );
-  const [locationName, setLocationName] = useState("");
-  const [bgDate, setBgDate] = useState("");
-  const [sevaState, setSevaState] = useState("");
-  const [designation, setDesignation] = useState("Sevadal");
-
-  const [isLocationEnabled, setIsLocationEnabled] = useState(false);
-  const [selectionLocError, setSelectionLocError] = useState(false);
+  const [userNotSelLocError, setUserNotSelLocError] = useAtom(
+    userNotSelLocErrorAtom
+  );
 
   const router = useRouter();
 
   useEffect(() => {
-    const storedProfile = localStorage.getItem("userProfile");
-    if (storedProfile) {
-      try {
-        const { name, location, locationName, bgDate, sevaState, designation } =
-          JSON.parse(storedProfile);
-        setName(name);
-        setLocation(location ? JSON.parse(location) : null);
-        setLocationName(locationName);
-        setBgDate(bgDate);
-        setSevaState(sevaState);
-        setDesignation(designation);
-      } catch (error) {
-        console.error("Error parsing stored profile:", error);
+    if (typeof window !== "undefined") {
+      console.log("Loading profile from localStorage...");
+      const storedProfile = localStorage.getItem("userProfile");
+      if (storedProfile) {
+        try {
+          const {
+            name,
+            location,
+            locationName,
+            bgDate,
+            sevaState,
+            designation,
+          } = JSON.parse(storedProfile);
+          setName(name);
+          setLocation(location ? JSON.parse(location) : null);
+          setLocationName(locationName);
+          setBgDate(bgDate);
+          setSevaState(sevaState);
+          setDesignation(designation);
+          console.log("Profile loaded:", {
+            name,
+            location,
+            locationName,
+            bgDate,
+            sevaState,
+            designation,
+          });
+        } catch (parseError) {
+          console.error("Error parsing stored profile:", parseError);
+        }
       }
     }
-  }, []);
+  }, [
+    setName,
+    setLocation,
+    setLocationName,
+    setBgDate,
+    setSevaState,
+    setDesignation,
+  ]);
 
   useEffect(() => {
-    setSelectionLocError(locationName === "");
-  }, [locationName]);
+    if (typeof window !== "undefined") {
+      console.log("Updating userNotSelLocError based on locationName...");
+      setUserNotSelLocError(locationName === "");
+    }
+  }, [locationName, setUserNotSelLocError]);
 
   const handleSave = () => {
-    const profiles = JSON.parse(localStorage.getItem("userProfiles") || "[]");
-    const currentTime = new Date().toLocaleString();
-    profiles.push({
-      userName: name, // Ensure userName is saved correctly
-      locationName,
-      time: currentTime,
-    });
-    localStorage.setItem("userProfiles", JSON.stringify(profiles));
-    localStorage.setItem(
-      "userProfile",
-      JSON.stringify({
+    if (typeof window !== "undefined") {
+      console.log("Saving profile to localStorage...");
+      const profiles = JSON.parse(localStorage.getItem("userProfiles") || "[]");
+      const currentTime = new Date().toLocaleString();
+      profiles.push({
+        userName: name,
+        locationName,
+        time: currentTime,
+      });
+      localStorage.setItem("userProfiles", JSON.stringify(profiles));
+      localStorage.setItem(
+        "userProfile",
+        JSON.stringify({
+          name,
+          location: JSON.stringify(location),
+          locationName,
+          bgDate,
+          sevaState,
+          designation,
+        })
+      );
+      console.log("Profile saved:", {
         name,
         location,
         locationName,
-        bgDate,
-        sevaState,
-        designation,
-      })
-    );
-    router.push("/pages/displayLocation");
-  };
-
-  const checkGeolocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const { latitude, longitude } = position.coords;
-          const isWithinPuttaparthi = await checkIfWithinPuttaparthi(
-            latitude,
-            longitude
-          );
-          if (isWithinPuttaparthi) {
-            setIsLocationEnabled(true);
-          } else {
-            alert("You must be within Puttaparthi to select a location.");
-          }
-        },
-        (error) => {
-          alert("Geolocation is not enabled. Please enable it to proceed.");
-        }
-      );
-    } else {
-      alert("Geolocation is not supported by this browser.");
+        currentTime,
+      });
+      router.push("/pages/displayLocation");
     }
   };
+
+  useEffect(() => {
+    const checkGeolocation = () => {
+      if (typeof window !== "undefined" && navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            console.log("Geolocation success:", position);
+            const { latitude, longitude } = position.coords;
+            const isWithinPuttaparthi = await checkIfWithinPuttaparthi(
+              latitude,
+              longitude
+            );
+            if (isWithinPuttaparthi) {
+              if (typeof window !== "undefined") {
+                setIsLocationEnabled(true);
+                console.log("is within Parthi, location enabled");
+              }
+            } else {
+              if (typeof window !== "undefined") {
+                alert("You must be within Puttaparthi to select a location.");
+              }
+            }
+          },
+          (geolocationError) => {
+            if (typeof window !== "undefined") {
+              alert("Geolocation is not enabled. Please enable it to proceed.");
+              console.error("Geolocation error:", geolocationError);
+            }
+          }
+        );
+      } else {
+        if (typeof window !== "undefined") {
+          alert("Geolocation is not supported by this browser.");
+        }
+      }
+    };
+
+    console.log("Checking geolocation...");
+    checkGeolocation();
+  }, [setIsLocationEnabled]);
 
   const LocationMarker = () => {
     useMapEvents({
@@ -122,16 +205,14 @@ const SelectLocationPage = () => {
         setLocation({ lat, lng });
         fetchLocationName(lat, lng)
           .then((locationName) => setLocationName(locationName))
-          .catch((error) => console.error("Error fetching address:", error));
+          .catch((fetchError) =>
+            console.error("Error fetching address:", fetchError)
+          );
       },
     });
 
     return location === null ? null : <Marker position={location}></Marker>;
   };
-
-  useEffect(() => {
-    checkGeolocation();
-  }, []);
 
   return (
     <div className={styles.selectContainer}>
@@ -157,14 +238,16 @@ const SelectLocationPage = () => {
 
       <p>Selected Location: {locationName || "None"}</p>
       <button
-        className={`button ${selectionLocError ? "buttonDisabled" : ""}`}
+        className={`button ${userNotSelLocError ? "buttonDisabled" : ""}`}
         onClick={handleSave}
-        disabled={selectionLocError || !isLocationEnabled}
+        disabled={userNotSelLocError || !isLocationEnabled}
         style={{
           backgroundColor:
-            selectionLocError || !isLocationEnabled ? "gray" : "green",
+            userNotSelLocError || !isLocationEnabled ? "gray" : "green",
           cursor:
-            selectionLocError || !isLocationEnabled ? "not-allowed" : "pointer",
+            userNotSelLocError || !isLocationEnabled
+              ? "not-allowed"
+              : "pointer",
         }}
       >
         Save Location

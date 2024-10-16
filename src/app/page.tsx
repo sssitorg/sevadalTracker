@@ -1,4 +1,5 @@
 import Navbar from "./components/Navbar";
+import Image from "next/image";
 
 const HomePage: React.FC = () => {
   return (
@@ -12,9 +13,11 @@ const HomePage: React.FC = () => {
         textAlign: "center",
       }}
     >
-      <img
+      <Image
         src="/sai emblum logo.png"
         alt="Logo"
+        width={100}
+        height={100}
         style={{ width: "100px", height: "auto" }}
       />
       <br />
@@ -27,7 +30,7 @@ const HomePage: React.FC = () => {
           alignItems: "center",
         }}
       >
-        <h2 style={{ margin: 0 }}>Let's go to: </h2> <br /> <br />
+        <h2 style={{ margin: 0 }}>Go to: </h2> <br /> <br />
         <Navbar />
       </div>
     </div>

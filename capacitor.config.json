@@ -1,0 +1,6 @@
+{
+  "appId": "com.sevadaltracker.app",
+  "appName": "Sevadal Tracker App",
+  "webDir": ".next",
+  "bundledWebRuntime": false
+}

@@ -10,61 +10,26 @@
 /*************************************************************************************************************************************** */
 
 "use client";
-"use client";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
+import { useAtom } from "jotai";
+import {
+  nameAtom,
+  sevaStateAtom,
+  bgDateAtom,
+  designationAtom,
+  statesOfIndiaAtom,
+  designationArrayAtom,
+} from "@/app/atoms/atoms";
 import styles from "@/app/styles/profile.module.css";
 
-const statesOfIndia = [
-  "Andaman and Nicobar Islands",
-  "Andhra Pradesh",
-  "Arunachal Pradesh",
-  "Assam",
-  "Bihar",
-  "Chandigarh",
-  "Chhattisgarh",
-  "Dadra and Nagar Haveli and Daman and Diu",
-  "Delhi",
-  "Goa",
-  "Gujarat",
-  "Haryana",
-  "Himachal Pradesh",
-  "Jharkhand",
-  "Jammu and Kashmir",
-  "Karnataka",
-  "Kerala",
-  "Ladakh",
-  "Lakshadweep",
-  "Madhya Pradesh",
-  "Maharashtra",
-  "Manipur",
-  "Meghalaya",
-  "Mizoram",
-  "Nagaland",
-  "Odisha",
-  "Puducherry",
-  "Punjab",
-  "Rajasthan",
-  "Sikkim",
-  "Tamil Nadu",
-  "Telangana",
-  "Tripura",
-  "Uttar Pradesh",
-  "Uttarakhand",
-  "West Bengal",
-];
-
-const designationArray = [
-  "Group Leader",
-  "State President",
-  "All India President",
-];
-
 const ProfilePage = () => {
-  const [name, setName] = useState("");
-  const [sevaState, setSevaState] = useState("");
-  const [bgDate, setBgDate] = useState(""); // Seva Begin date
-  const [designation, setDesignation] = useState("Sevadal");
+  const [name, setName] = useAtom(nameAtom);
+  const [sevaState, setSevaState] = useAtom(sevaStateAtom);
+  const [bgDate, setBgDate] = useAtom(bgDateAtom);
+  const [designation, setDesignation] = useAtom(designationAtom);
+  const [statesOfIndia] = useAtom(statesOfIndiaAtom);
+  const [designationArray] = useAtom(designationArrayAtom);
   const [errors, setErrors] = useState({
     name: false,
     sevaState: false,

@@ -52,11 +52,14 @@ export const isLoadingAtom = atom<boolean>(true);
 export const profileAtom = atom<Profile | null>(null);
 export const profilesAtom = atom<{ userName: string; locationName: string; time: string }[]>([]);
 
+
+
 // Select Location-related Atoms
 export const locationAtom = atom<{ lat: number; lng: number } | null>(null);
 export const locationNameAtom = atom<string>('');
 export const isLocationEnabledAtom = atom<boolean>(false);
 export const selectionLocErrorAtom = atom<boolean>(false);
+export const userNotSelLocErrorAtom = atom<boolean>(false);
 
 interface Profile {
   name: string;
